@@ -3,7 +3,7 @@
 An AI-powered room booking assistant designed for New Giza University students.
 ## Screenshot
 
-![NGU Room Booking Chatbot Screenshot](assets/chatbot-screenshot.png)
+![NGU Room Booking Chatbot Screenshot](assets/chatbot-screenshot.png.png)
 
 This project allows students to book university rooms such as study rooms, meeting rooms, lab rooms, and club activity rooms through a simple chatbot-style web interface.
 
