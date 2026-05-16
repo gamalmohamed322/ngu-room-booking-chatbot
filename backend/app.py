@@ -1,6 +1,10 @@
 from flask import Flask, request, jsonify
+from database import init_db, is_room_available, create_booking
 
 app = Flask(name)
+
+# Create the database table when the app starts
+init_db()
 
 
 @app.route("/")
@@ -38,11 +42,26 @@ def book_room():
             "missing_fields": missing_fields
         }), 400
 
+    available = is_room_available(
+        booking["room_name"],
+        booking["booking_date"],
+        booking["booking_time"]
+    )
+
+    if not available:
+        return jsonify({
+            "status": "error",
+            "message": "Sorry, this room is already booked at this date and time. Please choose another room or time."
+        }), 409
+
+    booking_id = create_booking(booking)
+
     return jsonify({
         "status": "success",
-        "message": "Your booking request has been received successfully.",
+        "message": "Your room booking has been confirmed successfully.",
+        "booking_id": booking_id,
         "booking": booking
-    })
+    }), 201
 
 
 if name == "main":
