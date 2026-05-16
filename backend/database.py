@@ -84,3 +84,34 @@ def create_booking(booking):
     connection.close()
 
     return booking_id
+
+def get_all_bookings():
+    connection = get_connection()
+    cursor = connection.cursor()
+
+    cursor.execute("""
+        SELECT *
+        FROM bookings
+        ORDER BY created_at DESC
+    """)
+
+    rows = cursor.fetchall()
+    connection.close()
+
+    bookings = []
+
+    for row in rows:
+        bookings.append({
+            "id": row["id"],
+            "room_type": row["room_type"],
+            "room_name": row["room_name"],
+            "booking_date": row["booking_date"],
+            "booking_time": row["booking_time"],
+            "student_name": row["student_name"],
+            "student_email": row["student_email"],
+            "phone": row["phone"],
+            "status": row["status"],
+            "created_at": row["created_at"]
+        })
+
+    return bookings
