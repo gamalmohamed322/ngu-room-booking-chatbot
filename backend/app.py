@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, render_template
 from database import init_db, is_room_available, create_booking, get_all_bookings
 from rooms import get_all_rooms, is_valid_room
 from validators import validate_booking_data
@@ -16,7 +16,9 @@ def home():
         "status": "success",
         "message": "NGU Room Booking Chatbot backend is running."
     })
-
+@app.route("/chat")
+def chat():
+    return render_template("chat.html")
 
 @app.route("/rooms", methods=["GET"])
 def rooms():
