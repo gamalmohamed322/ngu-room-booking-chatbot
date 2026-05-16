@@ -1,5 +1,5 @@
 from flask import Flask, request, jsonify
-from database import init_db, is_room_available, create_booking
+from database import init_db, is_room_available, create_booking, get_all_bookings
 from rooms import get_all_rooms, is_valid_room
 from validators import validate_booking_data
 
@@ -22,6 +22,12 @@ def rooms():
     return jsonify({
         "status": "success",
         "rooms": get_all_rooms()
+    })
+    @app.route("/bookings", methods=["GET"])
+def bookings():
+    return jsonify({
+        "status": "success",
+        "bookings": get_all_bookings()
     })
 
 
