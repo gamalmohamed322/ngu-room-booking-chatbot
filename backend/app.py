@@ -2,6 +2,7 @@ from flask import Flask, request, jsonify
 from database import init_db, is_room_available, create_booking, get_all_bookings
 from rooms import get_all_rooms, is_valid_room
 from validators import validate_booking_data
+from email_service import send_booking_confirmation
 
 app = Flask(__name__)
 
@@ -86,13 +87,15 @@ def book_room():
         }), 409
 
     booking_id = create_booking(booking)
+    email_result = send_booking_confirmation(booking, booking_id)
 
     return jsonify({
-        "status": "success",
-        "message": "Your room booking has been confirmed successfully.",
-        "booking_id": booking_id,
-        "booking": booking
-    }), 201
+    "status": "success",
+    "message": "Your room booking has been confirmed successfully.",
+    "booking_id": booking_id,
+    "booking": booking,
+    "email": email_result
+}), 201
 
 
 if __name__ == "__main__":
