@@ -1,0 +1,273 @@
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>NGU Room Booking Chatbot</title>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f4f6f8;
+            color: #222;
+        }
+
+        .page {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 30px;
+        }
+
+        .chat-container {
+            width: 100%;
+            max-width: 850px;
+            background: white;
+            border-radius: 18px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+            overflow: hidden;
+        }
+
+        .header {
+            background: #102a43;
+            color: white;
+            padding: 25px;
+            text-align: center;
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 30px;
+        }
+
+        .header p {
+            margin-top: 10px;
+            color: #d9e2ec;
+        }
+
+        .chat-box {
+            padding: 25px;
+        }
+
+        .bot-message {
+            background: #eef4ff;
+            border-left: 5px solid #2563eb;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 25px;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 18px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        label {
+            font-weight: bold;
+            margin-bottom: 7px;
+        }
+
+        input, select {
+            padding: 12px;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            font-size: 15px;
+        }
+
+        input:focus, select:focus {
+            outline: none;
+            border-color: #2563eb;
+        }
+
+        .full-width {
+            grid-column: span 2;
+        }
+
+        button {
+            width: 100%;
+            margin-top: 25px;
+            padding: 14px;
+            border: none;
+            border-radius: 10px;
+            background: #2563eb;
+            color: white;
+            font-size: 17px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #1d4ed8;
+        }
+
+        .result-box {
+            margin-top: 25px;
+            padding: 18px;
+            border-radius: 10px;
+            background: #f8fafc;
+            border: 1px solid #dbe3ea;
+            white-space: pre-wrap;
+            font-family: Consolas, monospace;
+            font-size: 14px;
+        }
+
+        .success {
+            border-left: 5px solid #16a34a;
+        }
+
+        .error {
+            border-left: 5px solid #dc2626;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 15px;
+            background: #f1f5f9;
+            font-size: 14px;
+            color: #64748b;
+        }
+
+        @media (max-width: 700px) {
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .full-width {
+                grid-column: span 1;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="page">
+        <div class="chat-container">
+            <div class="header">
+                <h1>NGU Room Booking Chatbot</h1>
+                <p>Book study rooms, meeting rooms, labs, and activity rooms at New Giza University.</p>
+            </div>
+
+            <div class="chat-box">
+                <div class="bot-message">
+                    <strong>Assistant:</strong>
+                    Hello! I am your NGU Room Booking Assistant. Fill in the booking details below and I will check room availability for you.
+                </div>
+ <form id="bookingForm">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="room_type">Room Type</label>
+                            <select id="room_type" required>
+                                <option value="study_room">Study Room</option>
+                                <option value="meeting_room">Meeting Room</option>
+                                <option value="lab_room">Lab Room</option>
+                                <option value="club_activity_room">Club Activity Room</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="room_name">Room Name</label>
+                            <select id="room_name" required>
+                                <option value="Library Study Room 1">Library Study Room 1</option>
+                                <option value="Library Study Room 2">Library Study Room 2</option>
+                                <option value="Library Study Room 3">Library Study Room 3</option>
+                                <option value="Meeting Room A">Meeting Room A</option>
+                                <option value="Meeting Room B">Meeting Room B</option>
+                                <option value="CS Lab 1">CS Lab 1</option>
+                                <option value="CS Lab 2">CS Lab 2</option>
+                                <option value="Engineering Lab">Engineering Lab</option>
+                                <option value="Student Activity Room">Student Activity Room</option>
+                                <option value="Club Meeting Room">Club Meeting Room</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="booking_date">Booking Date</label>
+                            <input type="date" id="booking_date" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="booking_time">Booking Time</label>
+                            <input type="text" id="booking_time" placeholder="Example: 2:00 PM" required>
+                        </div>
+
+                        <div class="form-group full-width">
+                            <label for="student_name">Student Name</label>
+                            <input type="text" id="student_name" placeholder="Example: Gamal Mohamed" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="student_email">Student Email</label>
+                            <input type="email" id="student_email" placeholder="student@ngu.edu.eg" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="phone">Phone Number</label>
+                            <input type="text" id="phone" placeholder="01000000000" required>
+                        </div>
+                    </div>
+
+                    <button type="submit">Book Room</button>
+                </form>
+
+                <div id="result" class="result-box">
+                    Booking result will appear here.
+                </div>
+            </div>
+
+            <div class="footer">
+                Developed as a Year 3 student project at New Giza University
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById("bookingForm").addEventListener("submit", async function(event) {
+            event.preventDefault();
+
+            const resultBox = document.getElementById("result");
+            resultBox.className = "result-box";
+            resultBox.textContent = "Checking room availability...";
+ const bookingData = {
+                room_type: document.getElementById("room_type").value,
+                room_name: document.getElementById("room_name").value,
+                booking_date: document.getElementById("booking_date").value,
+                booking_time: document.getElementById("booking_time").value,
+                student_name: document.getElementById("student_name").value,
+                student_email: document.getElementById("student_email").value,
+                phone: document.getElementById("phone").value
+            };
+
+            try {
+                const response = await fetch("/webhook/book-room", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify(bookingData)
+                });
+
+                const result = await response.json();
+
+                if (result.status === "success") {
+                    resultBox.className = "result-box success";
+                } else {
+                    resultBox.className = "result-box error";
+                }
+
+                resultBox.textContent = JSON.stringify(result, null, 2);
+
+            } catch (error) {
+                resultBox.className = "result-box error";
+                resultBox.textContent = "Something went wrong. Please make sure the Flask server is running.";
+            }
+        });
+    </script>
+</body>
+</html>
