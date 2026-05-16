@@ -94,3 +94,30 @@ Example:
   "status": "error",
   "message": "Sorry, this room is already booked at this date and time. Please choose another room or time."
 }
+## 6. View All Bookings
+
+URL:
+
+GET /bookings
+
+This route returns all saved room bookings.
+
+Expected response example:
+
+{
+  "status": "success",
+  "bookings": [
+    {
+      "id": 1,
+      "room_type": "study_room",
+      "room_name": "Library Study Room 1",
+      "booking_date": "2026-05-20",
+      "booking_time": "2:00 PM",
+      "student_name": "Gamal Mohamed",
+      "student_email": "student@ngu.edu.eg",
+      "phone": "01000000000",
+      "status": "confirmed",
+      "created_at": "2026-05-16 12:00:00"
+    }
+  ]
+}
