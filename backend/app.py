@@ -3,7 +3,7 @@ from database import init_db, is_room_available, create_booking, get_all_booking
 from rooms import get_all_rooms, is_valid_room
 from validators import validate_booking_data
 
-app = Flask(name)
+app = Flask(__name__)
 
 # Create the database table when the app starts
 init_db()
@@ -95,5 +95,5 @@ def book_room():
     }), 201
 
 
-if name == "main":
+if __name__ == "__main__":
     app.run(debug=True)
