@@ -1,5 +1,6 @@
 from flask import Flask, request, jsonify
 from database import init_db, is_room_available, create_booking
+from rooms import get_all_rooms, is_valid_room
 
 app = Flask(name)
 
@@ -12,6 +13,14 @@ def home():
     return jsonify({
         "status": "success",
         "message": "NGU Room Booking Chatbot backend is running."
+    })
+
+
+@app.route("/rooms", methods=["GET"])
+def rooms():
+    return jsonify({
+        "status": "success",
+        "rooms": get_all_rooms()
     })
 
 
@@ -40,6 +49,12 @@ def book_room():
             "status": "error",
             "message": "Some booking details are missing.",
             "missing_fields": missing_fields
+        }), 400
+
+    if not is_valid_room(booking["room_name"]):
+        return jsonify({
+            "status": "error",
+            "message": "This room does not exist. Please choose one of the available NGU rooms."
         }), 400
 
     available = is_room_available(
