@@ -1,6 +1,7 @@
 from flask import Flask, request, jsonify
 from database import init_db, is_room_available, create_booking
 from rooms import get_all_rooms, is_valid_room
+from validators import validate_booking_data
 
 app = Flask(name)
 
@@ -49,6 +50,15 @@ def book_room():
             "status": "error",
             "message": "Some booking details are missing.",
             "missing_fields": missing_fields
+        }), 400
+
+    validation_errors = validate_booking_data(booking)
+
+    if validation_errors:
+        return jsonify({
+            "status": "error",
+            "message": "Some booking details are invalid.",
+            "errors": validation_errors
         }), 400
 
     if not is_valid_room(booking["room_name"]):
